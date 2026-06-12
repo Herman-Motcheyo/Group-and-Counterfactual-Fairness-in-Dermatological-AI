@@ -37,17 +37,7 @@ class StratifiedCrossValidator:
         
     def prepare_data(self, df: pd.DataFrame, target_col: str, 
                     metadata_cols: List[str] = None) -> pd.DataFrame:
-        """
-        Prépare les données pour la validation croisée.
-        
-        Args:
-            df: DataFrame contenant les données
-            target_col: Nom de la colonne cible
-            metadata_cols: Colonnes de métadonnées à analyser
-            
-        Returns:
-            DataFrame préparé
-        """
+   
         data = df.copy()
         
         # Vérifications de base
@@ -158,8 +148,6 @@ class StratifiedCrossValidator:
     
     def _analyze_metadata_distribution(self, data: pd.DataFrame, 
                                      target_col: str, metadata_cols: List[str]):
-        """Analyse la distribution des métadonnées par classe."""
-        print(f"\n Analyse des métadonnées:")
         
         for col in metadata_cols:
             if col in data.columns:
@@ -186,16 +174,7 @@ class StratifiedCrossValidator:
 
 
     def create_stratified_splits_finale(self, data: pd.DataFrame, target_col: str) -> List[Tuple[np.ndarray, np.ndarray, np.ndarray]]:
-        """
-        Crée des splits stratifiés pour la validation croisée avec séparation train/val/test.
 
-        Args:
-            data (pd.DataFrame): Données complètes.
-            target_col (str): Nom de la colonne cible.
-
-        Returns:
-            List[Tuple[np.ndarray, np.ndarray, np.ndarray]]: Liste des tuples (train_idx, val_idx, test_idx) pour chaque fold.
-        """
         
         X = data.index.values
         y = data[target_col].values
@@ -233,16 +212,7 @@ class StratifiedCrossValidator:
 
     
     def create_stratified_splits(self, data: pd.DataFrame, target_col: str) -> List[Tuple]:
-        """
-        Crée les splits stratifiés pour la validation croisée.
-        
-        Args:
-            data: DataFrame des données
-            target_col: Colonne cible
-            
-        Returns:
-            Liste des tuples (train_idx, val_idx) pour chaque fold
-        """
+
         X = data.index.values
         y = data[target_col].values
         
@@ -409,16 +379,7 @@ class StratifiedCrossValidator:
     
     
     def get_fold_data(self, data: pd.DataFrame, fold: int) -> Tuple[pd.DataFrame, pd.DataFrame]:
-        """
-        Récupère les données d'entraînement et de validation pour un fold spécifique.
-        
-        Args:
-            data: DataFrame des données
-            fold: Numéro du fold (0-indexé)
-            
-        Returns:
-            Tuple (train_data, test_data, val_data)
-        """
+
         if not self.splits_indices:
             raise ValueError("Les splits doivent être créés avant de récupérer les données")
         

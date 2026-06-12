@@ -64,7 +64,7 @@ def save_history_to_csv(history, fold_number, models_name, save_dir='histories')
     file_path = f'{save_dir}/{models_name}/fold_{fold_number}/history_fold_{fold_number}.csv'
 
     hist_df.to_csv(file_path, index=False)
-    print(f"Historique sauvegardé : {file_path}")
+    #print(f"Historique sauvegardé : {file_path}")
 
 
 def plot_training(hist):

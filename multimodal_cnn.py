@@ -17,10 +17,7 @@ from glob import glob
 import seaborn as sns
 from PIL import Image
 from sklearn.preprocessing import label_binarize
-from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score
+from sklearn.model_selection import GridSearchCV,train_test_split
 
 import itertools
 
@@ -35,7 +32,7 @@ from keras import regularizers
 from keras.optimizers import Adam, SGD
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import ReduceLROnPlateau, EarlyStopping
-from sklearn.metrics import f1_score, matthews_corrcoef
+from sklearn.metrics import f1_score, matthews_corrcoef,confusion_matrix
 
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 import joblib

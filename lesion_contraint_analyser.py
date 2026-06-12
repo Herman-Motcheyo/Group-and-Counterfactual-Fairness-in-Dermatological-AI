@@ -25,20 +25,15 @@ class LesionConstraintsAnalyzer:
         self.constraints = {}
         
     def analyze_age_distribution(self, percentile_range=(5, 95)):
-        """Analyse la distribution d'âge par type de lésion"""
         age_constraints = {}
-        
-        print(" ANALYSE DES CONTRAINTES D'ÂGE")
-        print("="*50)
         
         for lesion_type in self.df[self.lesion_col].unique():
             lesion_data = self.df[self.df[self.lesion_col] == lesion_type]
             ages = lesion_data[self.age_col].dropna()
             
-            if len(ages) < 5:  # Pas assez de données
+            if len(ages) < 5: 
                 continue
                 
-            # Statistiques descriptives
             age_stats = {
                 'count': len(ages),
                 'mean': ages.mean(),
@@ -121,7 +116,6 @@ class LesionConstraintsAnalyzer:
         return sex_constraints
     
     def analyze_location_distribution(self, min_frequency=0.05):
-        """Analyse les localisations communes par type de lésion"""
         location_constraints = {}
                 
         for lesion_type in self.df[self.lesion_col].unique():
@@ -147,7 +141,7 @@ class LesionConstraintsAnalyzer:
                 if frequency >= min_frequency:  # Au moins 5% des cas
                     frequent_locations.append(location)
             
-            # Trier par fréquence
+           
             frequent_locations = sorted(frequent_locations, 
                                       key=lambda x: location_stats[x]['frequency'], 
                                       reverse=True)
@@ -159,7 +153,6 @@ class LesionConstraintsAnalyzer:
             }
             
             print(f"\n{lesion_type.upper()} (n={total}):")
-            print(f"  • Localisations communes (≥5%):")
             for loc in frequent_locations[:5]:  # Top 5
                 stats_loc = location_stats[loc]
                 print(f"    - {loc}: {stats_loc['count']} ({stats_loc['frequency']:.1%})")
@@ -167,7 +160,6 @@ class LesionConstraintsAnalyzer:
         return location_constraints
     
     def generate_constraints_dict(self):
-        """Génère le dictionnaire de contraintes final"""
         
         age_data = self.analyze_age_distribution()
         sex_data = self.analyze_sex_distribution()
@@ -202,7 +194,6 @@ class LesionConstraintsAnalyzer:
         return final_constraints
     
     def print_constraints_code(self):
-        """Imprime le code Python pour les contraintes"""
         if not self.constraints:
             self.generate_constraints_dict()
         
@@ -227,7 +218,6 @@ class LesionConstraintsAnalyzer:
         print("}")
     
     def _get_lesion_comment(self, lesion_type):
-        """Retourne le commentaire approprié pour chaque type de lésion"""
         comments = {
             'mel': '# Melanoma',
             'bcc': '# Basal cell carcinoma', 
@@ -289,7 +279,6 @@ class LesionConstraintsAnalyzer:
         plt.show()
     
     def save_constraints_to_file(self, filename='lesion_constraints.py'):
-        """Sauvegarde les contraintes dans un fichier Python"""
         if not self.constraints:
             self.generate_constraints_dict()
         
