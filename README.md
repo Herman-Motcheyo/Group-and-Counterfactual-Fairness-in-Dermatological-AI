@@ -1,6 +1,7 @@
 # Still Malignant if You Were a Woman? Auditing Group and Counterfactual Fairness in Dermatological AI
 ![alt text](img/flow.png)
-We propose a multimodal architecture that leverages the principles of transfer learning and late fusion to combine visual data and metadata in a classification framework efficiently. The architecture begins by initializing a pretrained model on ImageNet with 1.2 million images and 1,000 classes, from which the final classification layer is removed to allow adaptation to our task. These pre-learned features enable us to obtain a solid base of features that accelerate convergence and improve performance, particularly with limited datasets. This fine-tuning strategy represents an optimal balance between adaptation and stability. We allow the deep layers to adapt to the specificities of this domain while preserving the generic feature detectors learned in the shallow layers, thus avoiding catastrophic forgetting. We also allow targeted specialization by setting base model.trainable = True and then freezing the first layers.
+
+     We propose a multimodal architecture that leverages the principles of transfer learning and late fusion to combine visual data and metadata in a classification framework efficiently. The architecture begins by initializing a pretrained model on ImageNet with 1.2 million images and 1,000 classes, from which the final classification layer is removed to allow adaptation to our task. These pre-learned features enable us to obtain a solid base of features that accelerate convergence and improve performance, particularly with limited datasets. This fine-tuning strategy represents an optimal balance between adaptation and stability. We allow the deep layers to adapt to the specificities of this domain while preserving the generic feature detectors learned in the shallow layers, thus avoiding catastrophic forgetting. We also allow targeted specialization by setting base model.trainable = True and then freezing the first layers.
 ![alt text](img/causal.png)
 
 ## Dataset
@@ -32,31 +33,6 @@ pip install matplotlib seaborn scipy joblib dvc
 
 # 3. Pull the dataset via DVC
 dvc pull
-```
-
----
-
-## R
-**2. Serialized fold indices**
-
-Cross-validation splits are computed once and written to `cross_val_index.json`. All subsequent runs load this file, ensuring that train/validation/test sets are identical across experiments and machines.
-
-```python
-validator = StratifiedCrossValidator(n_splits=5, test_size=0.2, val_size=0.1)
-splits = validator.create_stratified_splits_finale(df, 'dx')
-# This overwrites cross_val_index.json
-```
-
-**3. Serialized preprocessors**
-
-All fit transformers (LabelEncoder, OneHotEncoder, StandardScaler) are saved per fold under `encoders/fold_N/` using `joblib`, enabling inference on new data without refitting.
-
-```
-encoders/
-└── fold_0/
-    ├── 0_label_encoder.pkl
-    ├── 0_onehot_encoder.pkl
-    └── 0_scaler_age.pkl
 ```
 
 ---
